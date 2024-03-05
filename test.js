@@ -12,12 +12,12 @@ var PlanScenario = Backbone.RelationalModel.extend({
     },
     //relation with ExecutionContext
     {
-      type:Backbone.HasOne,
-      key:"executionContext",
-      relatedModel:"ExecutionContext",
-      reverseRelation:{
-        key:"planScenario",
-      }
+      type: Backbone.HasOne,
+      key: "executionContext",
+      relatedModel: "ExecutionContext",
+      reverseRelation: {
+        key: "planScenario",
+      },
     },
   ],
   defaults: {
@@ -29,11 +29,45 @@ var PlanScenario = Backbone.RelationalModel.extend({
 // console.log("planScenario")
 
 var ScenarioPathStep = Backbone.RelationalModel.extend({
+  relations: [
+    {
+      type: Backbone.HasMany,
+      key: "planScenario",
+      relatedModel: "PlanScenario",
+      reverseRelation: {
+        key: "scenarioPathStep",
+      },
+    },
+    {
+      type: Backbone.HasMany,
+      key: "whatIfConfig",
+      relatedModel: "WhatIfConfig",
+      reverseRelation: {
+        key: "scenarioPathStep",
+      },
+    },
+    {
+      type: Backbone.HasMany,
+      key: "input",
+      relatedModel: "PeriodDataset",
+      reverseRelation: {
+        key: "scenarioPathStep",
+      },
+    },
+    {
+      type: Backbone.HasMany,
+      key: "scenario",
+      relatedModel: "PeriodDataset",
+      reverseRelation: {
+        key: "scenarioPathStep",
+      },
+    },
+  ],
   defaults: {
-    phase: ()=>guid(),
-    alternative: ()=>guid(),
+    phase: () => guid(),
+    alternative: () => guid(),
     startPeriod: null,
-    endPeriods: [],
+    noPeriods: null,
   },
 });
 
@@ -49,7 +83,7 @@ var ExecutionContext = Backbone.RelationalModel.extend({
     },
   ],
   defaults: {
-    planId:()=>guid(),
+    planId: () => guid(),
     data: {},
   },
 });
@@ -75,11 +109,10 @@ function guid() {
   );
 }
 
-
 var whatIfConfig = Backbone.RelationalModel.extend({
   defaults: {
-    valueId: null,
-    valueInstanceId: null,
+    valueId: "101",
+    valueInstanceId: "i01",
   },
 });
 
@@ -130,4 +163,3 @@ var scenarioPathStep2 = new ScenarioPathStep({
 planScenario
   .get("scenarioPathSteps")
   .add([scenarioPathStep1, scenarioPathStep2]);
-
