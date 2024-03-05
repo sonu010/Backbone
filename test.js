@@ -41,8 +41,8 @@ var ExecutionContext = Backbone.RelationalModel.extend({
   relations: [
     {
       type: Backbone.HasOne,
-      key: "whatIfConfig",
-      relatedModel: "planScenario",
+      key: "planScenario",
+      relatedModel: "PlanScenario",
       reverseRelation: {
         key: "executionContext",
       },
@@ -50,7 +50,7 @@ var ExecutionContext = Backbone.RelationalModel.extend({
   ],
   defaults: {
     planId:()=>guid(),
-    data: null,
+    data: {},
   },
 });
 function guid() {
