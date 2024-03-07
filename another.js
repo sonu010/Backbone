@@ -29,7 +29,7 @@ var PlanScenario = Backbone.RelationalModel.extend({
             relatedModel: "ExecutionContext",
         },
     ],
-    
+
 });
 
 // Define the ScenarioPathStep model
@@ -120,15 +120,15 @@ const ScenarioDataType = {
     forecast: "forecast",
     perception: "perception",
 };
-//ScenarioPathStepCollection
-var ScenarioPathStepCollection = Backbone.Collection.extend({
-    model: ScenarioPathStep,
-});
+// //ScenarioPathStepCollection
+// var ScenarioPathStepCollection = Backbone.Collection.extend({
+//     model: ScenarioPathStep,
+// });
 
-//PeriodDatasetCollection
-var PeriodDatasetCollection = Backbone.Collection.extend({
-    model: PeriodDataset,
-});
+// //PeriodDatasetCollection
+// var PeriodDatasetCollection = Backbone.Collection.extend({
+//     model: PeriodDataset,
+// });
 
 // Creating instances
 var planScenario = new PlanScenario({

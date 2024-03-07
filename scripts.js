@@ -127,15 +127,15 @@ const ScenarioDataType = {
     forecast: "forecast",
     perception: "perception",
 };
-//ScenarioPathStepCollection
-var ScenarioPathStepCollection = Backbone.Collection.extend({
-    model: ScenarioPathStep,
-});
+// //ScenarioPathStepCollection
+// var ScenarioPathStepCollection = Backbone.Collection.extend({
+//     model: ScenarioPathStep,
+// });
 
-//PeriodDatasetCollection
-var PeriodDatasetCollection = Backbone.Collection.extend({
-    model: PeriodDataset,
-});
+// //PeriodDatasetCollection
+// var PeriodDatasetCollection = Backbone.Collection.extend({
+//     model: PeriodDataset,
+// });
 
 // Instances
 // var planScenario = new PlanScenario({});
