@@ -1,14 +1,127 @@
-// var GUID=function() {
-//     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
-//     .replace(/[xy]/g, function (c) {
-//         const r = Math.random() * 16 | 0,
-//             v = c == 'x' ? r : (r & 0x3 | 0x8);
-//         return v.toString(16);
-//     });
-// }
 var GUID = function () {
     return Math.floor(Math.random() * 9000) + 1000;
 };
+// Define the PlanScenario model
+var PlanScenario = Backbone.RelationalModel.extend({
+    defaults: function () {
+        return {
+            id: null,
+            Plan: null,
+            startTime:
+                "Wed Mar 05 2024 14:50:35 GMT+0530 (India Standard Time)",
+        };
+    },
+    relations: [
+        {
+            type: Backbone.HasMany,
+            key: "scenarioPathSteps",
+            relatedModel: "ScenarioPathStep",
+        },
+        {
+            type: Backbone.HasOne,
+            key: "executionContext",
+            relatedModel: "ExecutionContext",
+        },
+    ],
+});
+
+// Define the ScenarioPathStep model
+var ScenarioPathStep = Backbone.RelationalModel.extend({
+    defaults: function () {
+        return {
+            phase: null,
+            alternative: null,
+            startPeriod: 0,
+            noPeriods: null,
+        };
+    },
+    relations: [
+        {
+            type: Backbone.HasOne,
+            key: "nextStep",
+            relatedModel: "ScenarioPathStep",
+            reverseRelation:{
+                key:"previousStep"
+            }
+        },
+        //PeriodDataset
+        {
+            type: Backbone.HasMany,
+            key: "inputDatasets",
+            relatedModel: "PeriodDataset",
+
+        },
+        {
+            type: Backbone.HasMany,
+            key: "scenarioDatasets",
+            relatedModel: "PeriodDataset",
+
+        },
+        {
+            type: Backbone.HasMany,
+            key: "whatIfConfig",
+            relatedModel: "WhatIfConfig",
+
+        },
+    ],
+});
+
+// PeriodDataset model
+var PeriodDataset = Backbone.RelationalModel.extend({
+    defaults: function () {
+        return {
+            period:0,
+            JSONObject: {},
+            type: null,
+        };
+    },
+    relations: [
+        {
+            type: Backbone.HasOne,
+            key: "nextDataset",
+            relatedModel: "PeriodDataset",
+            reverseRelation:{
+                key:"previousDataset"
+            }
+        },
+    ],
+    initialize: function() {
+        this.relations.push({
+            type: Backbone.HasOne,
+            key: 'type',
+            relatedModel: "ScenarioDataType"
+        });
+    }
+});
+
+
+// ExecutionContext model
+var ExecutionContext = Backbone.RelationalModel.extend({
+    defaults: function () {
+        return {
+            planId: null,
+            data: {}, // The data is array of InstantiationContext
+        };
+    },
+
+});
+// ExecutionContextView
+var ExecutionContextView = Backbone.View.extend({
+    defaults:function(){
+        return "This is a note"
+    }
+});
+
+//WhatIfConfig model
+var WhatIfConfig = Backbone.RelationalModel.extend({
+    defaults: function () {
+        return {
+            valueId: "",
+            valueInstanceId: "",
+        };
+    },
+});
+
 // Define the ScenarioDataType enumeration
 var ScenarioDataType = Backbone.Model.extend({
     defaults: function () {
@@ -23,166 +136,29 @@ var ScenarioDataType = Backbone.Model.extend({
         };
     },
 });
-
-// Define the PlanScenario model
-var PlanScenario = Backbone.RelationalModel.extend({
-    defaults: function () {
-        return {
-            id: GUID(),
-            Plan: GUID(),
-            startTime:
-                "Wed Mar 05 2024 14:50:35 GMT+0530 (India Standard Time)",
-        };
-    },
-    relations: [
-        {
-            type: Backbone.HasMany,
-            key: "scenarioPathSteps",
-            relatedModel: "ScenarioPathStep",
-            // reverseRelation: {
-                
-            // },
-        },
-        {
-            type: Backbone.HasOne,
-            key: "executionContext",
-            relatedModel: "ExecutionContext",
-            reverseRelation: {
-                type:Backbone.HasOne
-            },
-        },
-    ],
+//ScenarioPathStepCollection
+var ScenarioPathStepCollection = Backbone.Collection.extend({
+    model: ScenarioPathStep,
 });
 
-// Define the ScenarioPathStep model
-var ScenarioPathStep = Backbone.RelationalModel.extend({
-    defaults: function () {
-        return {
-            phase: GUID(),
-            alternative: GUID(),
-            startPeriod: 0,
-            noPeriods: 5,
-        };
-    },
-    relations: [
-        {
-            type: Backbone.HasOne,
-            key: "next",
-            relatedModel: "ScenarioPathStep",
-        },
-        {
-            type: Backbone.HasOne,
-            key: "previous",
-            relatedModel: "ScenarioPathStep",
-        },
-        {
-            type: Backbone.HasMany,
-            key: "input",
-            relatedModel: "PeriodDataset",
-            // reverseRelation: {
-            //     key: "scenarioPathStep",
-            // },
-        },
-        {
-            type:Backbone.HasMany,
-            key:"scenario",
-            relatedModel:"PeriodDataSet",
-            // reverseRelation:{
-            //     key:"periodDataset"
-            // }
-        },
-        {
-        type:Backbone.HasMany,
-        key:'whatIfConfig',
-        relatedModel:'WhatIfConfig',
-        reverseRelation:{
-            type:Backbone.HasOne
-        }
-        }
-    ],
+//PeriodDatasetCollection
+var PeriodDatasetCollection = Backbone.Collection.extend({
+    model: PeriodDataset,
 });
-
-// Define the PeriodDataset model
-var PeriodDataset = Backbone.RelationalModel.extend({
-    defaults: function () {
-        return {
-            period: null,
-            JSONObject: null,
-            type: null,
-        };
-    },
-    relations: [
-        {
-            type: Backbone.HasOne,
-            key: "next",
-            relatedModel: "PeriodDataset",
-        },
-        {
-            type: Backbone.HasOne,
-            key: "previous",
-            relatedModel: "PeriodDataset",
-        },
-        // {
-        //     type:Backbone.HasMany,
-        //     key:
-
-        // }
-    ],
-});
-
-// Define the ExecutionContext model
-var ExecutionContext = Backbone.RelationalModel.extend({
-    defaults: function () {
-        return {
-            planId: GUID(),
-            data: "",
-        };
-    },
-    relations: [
-        {
-            type: Backbone.HasOne,
-            key: "planScenario",
-            relatedModel: "PlanScenario",
-            reverseRelation: {
-                type: Backbone.HasOne,
-                key: "planScenario",
-            },
-        },
-    ],
-});
-
-// Define the WhatIfConfig model
-var WhatIfConfig = Backbone.RelationalModel.extend({
-    defaults: function () {
-        return {
-            valueId: null,
-            valueInstanceId: "",
-        };
-    },
-    relations:[{
-        type:Backbone.HasOne,
-        key:'scenarioPathStep',
-        relatedModel:'ScenarioPathStep'
-    }]
-});
-
-var InstantiationContext = Backbone.Model.extend({
-    defaults: function () {
-        return {};
-    },
-});
-
 // Instances
 var planScenario = new PlanScenario({});
 var executionContext = new ExecutionContext({});
 var scenarioPathStep = new ScenarioPathStep({});
 var whatIfConfig = new WhatIfConfig({});
-planScenario.set("executionContext", executionContext);
-// scenarioPathStep.set('next',WhatIfConfig);
-scenarioPathStep.set("periodDataset", PeriodDataset);
-scenarioPathStep.set("periodDataset", PeriodDataset);
-console.log(planScenario.toJSON());
-console.log(executionContext.toJSON());
-console.log(scenarioPathStep.toJSON());
-console.log(whatIfConfig.toJSON());
+var periodDataset = new PeriodDataset({});
+periodDataset.set('type',scenarioDataType)
+var scenarioDataType = new ScenarioDataType({});
+// var executionContextView = new ExecutionContextView({});
 
+console.log("PlanScenario", planScenario.toJSON());
+console.log("ExecutionContext", executionContext.toJSON());
+console.log("ScenarioPathStep", scenarioPathStep.toJSON());
+console.log("WhatIfConfig", whatIfConfig.toJSON());
+console.log("PeriodDataset", periodDataset.toJSON());
+console.log("ScenarioDataType", scenarioDataType.toJSON());
+// console.log("executionContextView",executionContextView.toJSON());
