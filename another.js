@@ -11,13 +11,12 @@ var GUID = function () {
 };
 // Define the PlanScenario model
 var PlanScenario = Backbone.RelationalModel.extend({
-    defaults: function () {
-        return {
-            id: null,
-            Plan: null,
-            startTime: null,
-        };
+    defaults: {
+        id: null,
+        Plan: null,
+        startTime: null,
     },
+
     relations: [
         {
             type: Backbone.HasMany,
@@ -30,17 +29,16 @@ var PlanScenario = Backbone.RelationalModel.extend({
             relatedModel: "ExecutionContext",
         },
     ],
+    
 });
 
 // Define the ScenarioPathStep model
 var ScenarioPathStep = Backbone.RelationalModel.extend({
-    defaults: function () {
-        return {
-            phase: null,
-            alternative: null,
-            startPeriod: 0,
-            noPeriods: null,
-        };
+    defaults: {
+        phase: null,
+        alternative: null,
+        startPeriod: 0,
+        noPeriods: null,
     },
     relations: [
         {
@@ -72,13 +70,12 @@ var ScenarioPathStep = Backbone.RelationalModel.extend({
 
 // PeriodDataset model
 var PeriodDataset = Backbone.RelationalModel.extend({
-    defaults: function () {
-        return {
-            period: 0,
-            data: null,
-            type: null,
-        };
+    defaults: {
+        period: 0,
+        data: null,
+        type: null,
     },
+
     relations: [
         {
             type: Backbone.HasOne,
@@ -93,11 +90,9 @@ var PeriodDataset = Backbone.RelationalModel.extend({
 
 // ExecutionContext model
 var ExecutionContext = Backbone.RelationalModel.extend({
-    defaults: function () {
-        return {
-            planId: null,
-            data: null, // The data is array of InstantiationContext
-        };
+    defaults: {
+        planId: null,
+        data: null, // The data is array of InstantiationContext
     },
 });
 // ExecutionContextView
@@ -109,11 +104,9 @@ var ExecutionContextView = Backbone.View.extend({
 
 //WhatIfConfig model
 var WhatIfConfig = Backbone.RelationalModel.extend({
-    defaults: function () {
-        return {
-            valueId: null,
-            valueInstanceId: null,
-        };
+    defaults: {
+        valueId: null,
+        valueInstanceId: null,
     },
 });
 
@@ -136,24 +129,6 @@ var ScenarioPathStepCollection = Backbone.Collection.extend({
 var PeriodDatasetCollection = Backbone.Collection.extend({
     model: PeriodDataset,
 });
-
-// Instances
-// var planScenario = new PlanScenario({});
-// var executionContext = new ExecutionContext({});
-// var scenarioPathStep = new ScenarioPathStep({});
-// var whatIfConfig = new WhatIfConfig({});
-// var periodDataset = new PeriodDataset({});
-// periodDataset.set("type", scenarioDataType);
-// var scenarioDataType = new ScenarioDataType({});
-// // var executionContextView = new ExecutionContextView({});
-
-// console.log("PlanScenario", planScenario.toJSON());
-// console.log("ExecutionContext", executionContext.toJSON());
-// console.log("ScenarioPathStep", scenarioPathStep.toJSON());
-// console.log("WhatIfConfig", whatIfConfig.toJSON());
-// console.log("PeriodDataset", periodDataset.toJSON());
-// console.log("ScenarioDataType", scenarioDataType.toJSON());
-// // console.log("executionContextView",executionContextView.toJSON());
 
 // Creating instances
 var planScenario = new PlanScenario({
@@ -181,9 +156,8 @@ var executionContext = new ExecutionContext({
     data: {
         context1: "data1",
         context2: "data2",
-    }
+    },
 });
-
 
 var periodDataset1 = new PeriodDataset({
     period: 1,
@@ -210,7 +184,9 @@ var whatIfConfig = new WhatIfConfig({
 });
 
 // Add relations
-planScenario.get("scenarioPathSteps").add([scenarioPathStep1, scenarioPathStep2]);
+planScenario
+    .get("scenarioPathSteps")
+    .add([scenarioPathStep1, scenarioPathStep2]);
 planScenario.set("executionContext", executionContext);
 
 scenarioPathStep1.get("inputDatasets").add(periodDataset1);
