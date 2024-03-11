@@ -125,7 +125,7 @@ const ScenarioDataType = {
     norm: "norm",
     target: "target",
     forecast: "forecast",
-    perception: "perception",
+    perception: "perception",   
 };
 // //ScenarioPathStepCollection
 // var ScenarioPathStepCollection = Backbone.Collection.extend({
