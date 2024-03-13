@@ -11,14 +11,37 @@ const ScenarioDataType = {
 const GUID = () => Math.floor(Math.random() * 9000) + 1000;
 
 // Model Definitions
-var PlanScenario = Backbone.RelationalModel.extend({
-    // idAttribute:"id",
-    defaults: {
-        id: null,
-        Plan: null,
-        startTime: null,
-    },
-    relations: [
+var PlanScenario = (() => {
+    class PlanScenario extends Backbone.RelationalModel {
+        constructor(attributes, options) {
+            super(attributes, options);
+            this.defaults = {
+                id: null,
+                Plan: null,
+                startTime: null,
+            };
+            this._scenarioPathSteps = new Backbone.Collection();
+            this._executionContext = null;
+        }
+
+        get scenarioPathSteps() {
+            return this._scenarioPathSteps;
+        }
+
+        set scenarioPathSteps(steps) {
+            this._scenarioPathSteps = steps;
+        }
+
+        get executionContext() {
+            return this._executionContext;
+        }
+
+        set executionContext(context) {
+            this._executionContext = context;
+        }
+    }
+
+    PlanScenario.prototype.relations = [
         {
             type: Backbone.HasMany,
             key: "scenarioPathSteps",
@@ -26,7 +49,7 @@ var PlanScenario = Backbone.RelationalModel.extend({
             reverseRelation: {
                 key: "planScenarioSPS",
                 type: Backbone.HasOne,
-                includeInJSON: "id",
+                includeInJSON: "id"
             }
         },
         {
@@ -36,36 +59,78 @@ var PlanScenario = Backbone.RelationalModel.extend({
             reverseRelation: {
                 key: "planScenarioRL",
                 type: Backbone.HasOne,
-                includeInJSON: "id",
+                includeInJSON: "id"
             }
         },
-    ],
-});
+    ];
 
-var ScenarioPathStep = Backbone.RelationalModel.extend({
-    // idAttribute:"id",
-    defaults: {
-        phase: null,
-        alternative: null,
-        startPeriod: 0,
-        noPeriods: null,
-    },
-    relations: [
+    return PlanScenario;
+})();
+
+var ScenarioPathStep = (() => {
+    class ScenarioPathStep extends Backbone.RelationalModel {
+        constructor(attributes, options) {
+            super(attributes, options);
+            this.defaults = {
+                phase: null,
+                alternative: null,
+                startPeriod: 0,
+                noPeriods: null,
+            };
+            this._nextStep = new Backbone.Collection();
+            this._inputDatasets = new Backbone.Collection();
+            this._scenarioDatasets = new Backbone.Collection();
+            this._whatIfConfig = new Backbone.Collection();
+        }
+
+        get nextStep() {
+            return this._nextStep;
+        }
+
+        set nextStep(step) {
+            this._nextStep = step;
+        }
+
+        get inputDatasets() {
+            return this._inputDatasets;
+        }
+
+        set inputDatasets(datasets) {
+            this._inputDatasets = datasets;
+        }
+
+        get scenarioDatasets() {
+            return this._scenarioDatasets;
+        }
+
+        set scenarioDatasets(datasets) {
+            this._scenarioDatasets = datasets;
+        }
+
+        get whatIfConfig() {
+            return this._whatIfConfig;
+        }
+
+        set whatIfConfig(config) {
+            this._whatIfConfig = config;
+        }
+    }
+
+    ScenarioPathStep.prototype.relations = [
         {
             type: Backbone.HasMany,
             key: "nextStep",
             relatedModel: "ScenarioPathStep",
             reverseRelation: {
                 key: "previousStep",
-                type: Backbone.HasOne,
                 includeInJSON: "id",
+                type: Backbone.HasOne
             }
         },
         {
             type: Backbone.HasMany,
             key: "inputDatasets",
             relatedModel: "PeriodDataset",
-            // includeInJSON: "id",
             reverseRelation: {
                 key: "inputPD",
                 type: Backbone.HasOne,
@@ -89,19 +154,36 @@ var ScenarioPathStep = Backbone.RelationalModel.extend({
             reverseRelation: {
                 key: "ScenarioPathstepWIC",
                 type: Backbone.HasOne,
-                includeInJSON: "id",
+                includeInJSON:"id"
             }
         },
-    ],
-});
+    ];
 
-var PeriodDataset = Backbone.RelationalModel.extend({
-    defaults: {
-        period: 0,
-        data: null,
-        type: null,
-    },
-    relations: [
+    return ScenarioPathStep;
+})();
+
+var PeriodDataset = (() => {
+    class PeriodDataset extends Backbone.RelationalModel {
+        constructor(attributes, options) {
+            super(attributes, options);
+            this.defaults = {
+                period: 0,
+                data: null,
+                type: null,
+            };
+            this._nextDataset = new Backbone.Collection();
+        }
+
+        get nextDataset() {
+            return this._nextDataset;
+        }
+
+        set nextDataset(dataset) {
+            this._nextDataset = dataset;
+        }
+    }
+
+    PeriodDataset.prototype.relations = [
         {
             type: Backbone.HasMany,
             key: "nextDataset",
@@ -112,22 +194,38 @@ var PeriodDataset = Backbone.RelationalModel.extend({
                 type: Backbone.HasOne
             },
         },
-    ],
-});
+    ];
 
-var ExecutionContext = Backbone.RelationalModel.extend({
-    defaults: {
-        planId: null,
-        data: null,
-    },
-});
+    return PeriodDataset;
+})();
 
-var WhatIfConfig = Backbone.RelationalModel.extend({
-    defaults: {
-        valueId: null,
-        valueInstanceId: null,
-    },
-});
+var ExecutionContext = (() => {
+    class ExecutionContext extends Backbone.RelationalModel {
+        constructor(attributes, options) {
+            super(attributes, options);
+            this.defaults = {
+                planId: null,
+                data: null,
+            };
+        }
+    }
+
+    return ExecutionContext;
+})();
+
+var WhatIfConfig = (() => {
+    class WhatIfConfig extends Backbone.RelationalModel {
+        constructor(attributes, options) {
+            super(attributes, options);
+            this.defaults = {
+                valueId: null,
+                valueInstanceId: null,
+            };
+        }
+    }
+
+    return WhatIfConfig;
+})();
 
 // Create instances
 const planScenario = new PlanScenario({
@@ -175,40 +273,31 @@ const periodDataset3 = new PeriodDataset({
         value2:300
     }
 })
-// Setting next and previous relationships for PeriodDataset instances
-periodDataset1.set("nextDataset", periodDataset2);
-periodDataset2.set("previousDataset", periodDataset1);
-periodDataset2.set("nextDataset", periodDataset3);
-periodDataset3.set("previousDataset", periodDataset2);
 
 periodDataset1.set("type", ScenarioDataType.plan);
 periodDataset2.set("type", ScenarioDataType.actual);
-periodDataset3.set("type",ScenarioDataType.perception)
+
 const scenarioPathStep1 = new ScenarioPathStep({
     phase: GUID(),
     alternative: "Alternative 1",
-    startPeriod: 0,
+    startPeriod: 1,
     noPeriods: 5,
 });
 
 const scenarioPathStep2 = new ScenarioPathStep({
     phase: GUID(),
     alternative: "Alternative 2",
-    startPeriod: 2,
+    startPeriod: 6,
     noPeriods: 3,
 });
-// Setting next and previous relationships for ScenarioPathStep instances
-scenarioPathStep1.set("nextStep", scenarioPathStep2);
-scenarioPathStep2.set("previousStep", scenarioPathStep1);
-
 
 // Add relations
 planScenario.set("executionContext", executionContext);
+// planScenario.setExecutionContext(executionContext)
 scenarioPathStep1.get("inputDatasets").add(periodDataset1);
 scenarioPathStep1.get("scenarioDatasets").add(periodDataset2);
-scenarioPathStep2.get("scenarioDatasets").add(periodDataset3);
 scenarioPathStep1.get("whatIfConfig").add(whatIfConfig);
-scenarioPathStep2.get("whatIfConfig").add(whatIfConfig2);
+scenarioPathStep1.get("whatIfConfig").add(whatIfConfig2);
 planScenario.get("scenarioPathSteps").add([scenarioPathStep1, scenarioPathStep2]);
 
 // Log instances
@@ -216,6 +305,6 @@ console.log("Plan Scenario:", planScenario.toJSON());
 console.log("Scenario Path Steps:");
 planScenario.get("scenarioPathSteps").each(step => console.log(step.toJSON()));
 console.log("Execution Context:\n", executionContext.toJSON());
-console.log("Period Datasets:", periodDataset1.toJSON(), periodDataset2.toJSON(),periodDataset3.toJSON());
+console.log("Period Datasets:\n", periodDataset1.toJSON(), periodDataset2.toJSON());
 console.log("WhatIfConfig:\n",whatIfConfig.toJSON());
-console.log(whatIfConfig2.toJSON())
+console.log(whatIfConfig2.toJSON());
