@@ -12,7 +12,6 @@ const GUID = () => Math.floor(Math.random() * 9000) + 1000;
 
 // Model Definitions
 var PlanScenario = Backbone.RelationalModel.extend({
-    // idAttribute:"id",
     defaults: {
         id: null,
         Plan: null,
@@ -43,7 +42,6 @@ var PlanScenario = Backbone.RelationalModel.extend({
 });
 
 var ScenarioPathStep = Backbone.RelationalModel.extend({
-    // idAttribute:"id",
     defaults: {
         phase: null,
         alternative: null,
@@ -65,7 +63,6 @@ var ScenarioPathStep = Backbone.RelationalModel.extend({
             type: Backbone.HasMany,
             key: "inputDatasets",
             relatedModel: "PeriodDataset",
-            // includeInJSON: "id",
             reverseRelation: {
                 key: "inputPD",
                 type: Backbone.HasOne,

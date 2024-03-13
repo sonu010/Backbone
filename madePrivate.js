@@ -25,19 +25,19 @@ var PlanScenario = (() => {
         }
 
         get scenarioPathSteps() {
-            return this._scenarioPathSteps;
+            return this.scenarioPathSteps;
         }
 
         set scenarioPathSteps(steps) {
-            this._scenarioPathSteps = steps;
+            this.scenarioPathSteps = steps;
         }
 
         get executionContext() {
-            return this._executionContext;
+            return this.executionContext;
         }
 
         set executionContext(context) {
-            this._executionContext = context;
+            this.executionContext = context;
         }
     }
 
@@ -293,7 +293,6 @@ const scenarioPathStep2 = new ScenarioPathStep({
 
 // Add relations
 planScenario.set("executionContext", executionContext);
-// planScenario.setExecutionContext(executionContext)
 scenarioPathStep1.get("inputDatasets").add(periodDataset1);
 scenarioPathStep1.get("scenarioDatasets").add(periodDataset2);
 scenarioPathStep1.get("whatIfConfig").add(whatIfConfig);
