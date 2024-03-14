@@ -1,52 +1,60 @@
-import GUID from "./GUID.js";
-let PlanScenarioMixin = {
-    defaults: {
-		id: null,
-		plan: null,
-		startTime: null,
-	},
+import GUID from './GUID.js';
 
-	initialize: function () {
-		this.set("id", GUID());
-	},
-	getPlan: function () {
-		return this.get("plan");
-	},
+class PlanScenarioMixin {
+    constructor() {
+        this.defaults = {
+            id: null,
+            plan: null,
+            startTime: null,
+        };
 
-	setPlan: function (plan) {
-		this.set("plan", plan);
-	},
+        this.initialize();
+    }
 
-	getStartTime: function () {
-		return this.get("startTime");
-	},
+    initialize() {
+        this.set("id", GUID());
+    }
 
-	setStartTime: function (startTime) {
-		this.set("startTime", startTime);
-	},
+    getPlan() {
+        return this.get("plan");
+    }
 
-	relations: [
-		{
-			type: Backbone.HasMany,
-			key: "scenarioPathSteps",
-			relatedModel: "ScenarioPathStep",
-			reverseRelation: {
-				key: "planScenarioSPS",
-				type: Backbone.HasOne,
-				includeInJSON: "id",
-			},
-		},
-		{
-			type: Backbone.HasOne,
-			key: "executionContext",
-			relatedModel: "ExecutionContext",
-			reverseRelation: {
-				key: "planScenarioRL",
-				type: Backbone.HasOne,
-				includeInJSON: "id",
-			},
-		},
-	],
+    setPlan(plan) {
+        this.set("plan", plan);
+    }
+
+    getStartTime() {
+        return this.get("startTime");
+    }
+
+    setStartTime(startTime) {
+        this.set("startTime", startTime);
+    }
+
+    relations() {
+        return [
+            {
+                type: Backbone.HasMany,
+                key: "scenarioPathSteps",
+                relatedModel: "ScenarioPathStep",
+                reverseRelation: {
+                    key: "planScenarioSPS",
+                    type: Backbone.HasOne,
+                    includeInJSON: "id",
+                },
+            },
+            {
+                type: Backbone.HasOne,
+                key: "executionContext",
+                relatedModel: "ExecutionContext",
+                reverseRelation: {
+                    key: "planScenarioRL",
+                    type: Backbone.HasOne,
+                    includeInJSON: "id",
+                },
+            },
+        ];
+    }
 }
 
 export default PlanScenarioMixin;
