@@ -1,8 +1,8 @@
-import * as Backbone from 'backbone'
+// import * as Backbone from 'backbone'
 // import * as  from './js/bower_components/backbone-relational/backbone-relational.js';
 
 import PlanScenarioMixin from './PlanScenarioMixin.js';
-// import GUID from './guidMixin.js'
+import GUID from './guidMixin.js'
 var PlanScenario = Backbone.RelationalModel.extend(PlanScenarioMixin);
 
 export default PlanScenario;
