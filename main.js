@@ -22,6 +22,7 @@ var executionContext = new ExecutionContext({
         context1: "executionContextData1",
         context2: "executionContextData2",
     },
+
 });
 
 // Create WhatIfConfigs
@@ -41,6 +42,7 @@ var periodDataset1 = new PeriodDataset({
         value2: 200,
     },
     type: ScenarioDataType.plan,
+    nextDataset:[periodDataset2]
 });
 var periodDataset2 = new PeriodDataset({
     period: 2,
@@ -57,7 +59,6 @@ var periodDataset3 = new PeriodDataset({
         value2: 300,
     },
     type: ScenarioDataType.perception,
-    nextDataset:[]
 });
 var scenarioPathStep1 = new ScenarioPathStep({
     phase: "Phase 1",
@@ -99,7 +100,7 @@ var planScenario = new PlanScenario({
     id: planScenarioId,
     plan: "Plan 1",
     startTime: new Date(),
-    scenarioPathSteps: [scenarioPathStep1, scenarioPathStep2], // Add multiple ScenarioPathSteps
+    scenarioPathSteps: [scenarioPathStep1, scenarioPathStep2],
     executionContext: executionContext,
 });
 
@@ -112,3 +113,4 @@ console.log("WhatIfConfig 2:", whatIfConfig2.toJSON());
 console.log("Period Dataset 1:", periodDataset1.toJSON());
 console.log("Period Dataset 2:", periodDataset2.toJSON());
 console.log("Period Dataset 3:", periodDataset3.toJSON());
+console.log()
