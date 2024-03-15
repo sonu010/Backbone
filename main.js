@@ -1,18 +1,10 @@
-import PlanScenarioMixin from './PlanScenarioMixin.js';
-import ScenarioPathStepMixin from './ScenarioPathStepMixin.js';
-import PeriodDatasetMixin from './PeriodDatasetMixin.js';
-import ExecutionContextMixin from './ExecutionContextMixin.js';
-import WhatIfConfigMixin from './WhatIfConfigMixin.js';
 import GUID from './GUID.js';
 import ScenarioDataType from './ScenarioDataType.js';
-
-// Define Backbone models
-var PlanScenario = Backbone.RelationalModel.extend(PlanScenarioMixin);
-var ExecutionContext = Backbone.RelationalModel.extend(ExecutionContextMixin);
-var ScenarioPathStep = Backbone.RelationalModel.extend(ScenarioPathStepMixin);
-var PeriodDataset = Backbone.RelationalModel.extend(PeriodDatasetMixin);
-var WhatIfConfig = Backbone.RelationalModel.extend(WhatIfConfigMixin);
-
+import PlanScenario from './PlanScenario.js';
+import ScenarioPathStep from './ScenarioPathStep.js' 
+import PeriodDataset from './PeriodDataset.js'
+import ExecutionContext from './ExecutionContext.js'
+import WhatIfConfig from './WhatIfConfig.js';
 const planScenarioId = GUID();
 
 // Create ExecutionContext
@@ -42,7 +34,7 @@ var periodDataset1 = new PeriodDataset({
         value2: 200,
     },
     type: ScenarioDataType.plan,
-    nextDataset:[periodDataset2]
+    // nextDataset:[periodDataset2]
 });
 var periodDataset2 = new PeriodDataset({
     period: 2,
@@ -52,6 +44,7 @@ var periodDataset2 = new PeriodDataset({
     },
     type: ScenarioDataType.actual,
 });
+periodDataset1.set('nextDataset',periodDataset2)
 var periodDataset3 = new PeriodDataset({
     period: 3,
     data: {
@@ -67,7 +60,7 @@ var scenarioPathStep1 = new ScenarioPathStep({
     noPeriods: 5,
     nextStep: [],
     previousStep: [],
-    inputDatasets: [periodDataset1, periodDataset2, periodDataset3],
+    inputDatasets: [periodDataset1, periodDataset2],
     scenarioDatasets: [],
     whatIfConfig: [whatIfConfig, whatIfConfig2],
 });
@@ -77,13 +70,23 @@ var scenarioPathStep2 = new ScenarioPathStep({
     alternative: "Alternative 2",
     startPeriod: 6,
     noPeriods: 3,
-    nextStep: [scenarioPathStep1],
+    nextStep: [],
     previousStep: [], 
     inputDatasets: [periodDataset1, periodDataset2],
-    scenarioDatasets: [],
+    scenarioDatasets: [periodDataset4],
     whatIfConfig: [whatIfConfig],
 });
-
+var scenarioPathStep3 = new ScenarioPathStep({
+    phase: "Phase 3",
+    alternative: "Alternative 2",
+    startPeriod: 6,
+    noPeriods: 3,
+    nextStep: [],
+    previousStep: [], 
+    inputDatasets: [],
+    scenarioDatasets: [],
+    whatIfConfig: [],
+});
 var periodDataset4 = new PeriodDataset({
     period: 4,
     data: {
@@ -93,24 +96,24 @@ var periodDataset4 = new PeriodDataset({
     type: ScenarioDataType.plan,
 });
 
-scenarioPathStep1.set('nextStep', [scenarioPathStep2]);
-
+scenarioPathStep1.set('nextStep', scenarioPathStep2);
+scenarioPathStep2.set('previousStep',scenarioPathStep3)
 // Create PlanScenario
 var planScenario = new PlanScenario({
     id: planScenarioId,
     plan: "Plan 1",
     startTime: new Date(),
-    scenarioPathSteps: [scenarioPathStep1, scenarioPathStep2],
+    scenarioPathSteps: [scenarioPathStep1],
     executionContext: executionContext,
 });
 
-console.log("Plan Scenario:", planScenario.toJSON());
-console.log("Execution Context:", executionContext.toJSON());
-console.log("Scenario Path Step 1:", scenarioPathStep1.toJSON());
-console.log("Scenario Path Step 2:", scenarioPathStep2.toJSON());
-console.log("WhatIfConfig 1:", whatIfConfig.toJSON());
-console.log("WhatIfConfig 2:", whatIfConfig2.toJSON());
-console.log("Period Dataset 1:", periodDataset1.toJSON());
-console.log("Period Dataset 2:", periodDataset2.toJSON());
-console.log("Period Dataset 3:", periodDataset3.toJSON());
-console.log()
+console.log("Plan Scenario:\n", planScenario.toJSON());
+console.log("Execution Context:\n", executionContext.toJSON());
+console.log("Scenario Path Step 1:\n", scenarioPathStep1.toJSON());
+console.log("Scenario Path Step 2:\n", scenarioPathStep2.toJSON());
+console.log("ScenarioPathStep 3:\n",scenarioPathStep3.toJSON())
+console.log("WhatIfConfig 1:\n", whatIfConfig.toJSON());
+console.log("WhatIfConfig 2:\n", whatIfConfig2.toJSON());
+console.log("Period Dataset 1:\n", periodDataset1.toJSON());
+console.log("Period Dataset 2:\n", periodDataset2.toJSON());
+console.log("Period Dataset 3:\n", periodDataset3.toJSON());
