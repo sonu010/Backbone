@@ -1,21 +1,14 @@
-import GUID from './GUID.js';
-
-class PlanScenarioMixin {
-    constructor() {
-        this.defaults = {
+export class PlanScenarioMixin {
+    defaults() {
+        return {
             id: null,
             plan: null,
-            startTime: null,
+            startTime: null
         };
-
-        this.initialize();
     }
-
     initialize() {
-        this.set("id", GUID());
     }
-
-    getPlan() {
+    getPlan(){
         return this.get("plan");
     }
 
@@ -31,7 +24,7 @@ class PlanScenarioMixin {
         this.set("startTime", startTime);
     }
 
-    relations() {
+    static getMixinRelations() {
         return [
             {
                 type: Backbone.HasMany,
@@ -40,8 +33,8 @@ class PlanScenarioMixin {
                 reverseRelation: {
                     key: "planScenarioScenarioPathStep",
                     type: Backbone.HasOne,
-                    includeInJSON: "id",
-                },
+                    includeInJSON: Backbone.Model.prototype.idAttribute
+                }
             },
             {
                 type: Backbone.HasOne,
@@ -50,11 +43,17 @@ class PlanScenarioMixin {
                 reverseRelation: {
                     key: "planScenarioExecutionContext",
                     type: Backbone.HasOne,
-                    includeInJSON: "id",
-                },
-            },
+                    includeInJSON: Backbone.Model.prototype.idAttribute
+                }
+            }
         ];
     }
-}
 
-export default PlanScenarioMixin;
+    static getCumulativeMixinRelations() {
+        return this.getMixinRelations();
+    }
+
+    static getSuperTypes() {
+        return [];
+    }
+}

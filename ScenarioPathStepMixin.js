@@ -1,9 +1,9 @@
-class ScenarioPathStepMixin {
-    constructor() {
-        this.defaults = {
+export class ScenarioPathStepMixin {
+    defaults() {
+        return {
             phase: null,
             alternative: null,
-            startPeriod: 0,
+            startPeriod: null,
             noPeriods: null,
         };
     }
@@ -40,7 +40,7 @@ class ScenarioPathStepMixin {
         this.set("noPeriods", noPeriods);
     }
 
-    relations() {
+    static getMixinRelations() {
         return [
             {
                 type: Backbone.HasMany,
@@ -85,5 +85,3 @@ class ScenarioPathStepMixin {
         ];
     }
 }
-
-export default ScenarioPathStepMixin;

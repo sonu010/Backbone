@@ -1,8 +1,8 @@
-class ExecutionContextMixin {
-    constructor() {
-        this.defaults = {
+export class ExecutionContextMixin {
+    defaults() {
+        return {
             planId: null,
-            data: null,
+            data: null
         };
     }
 
@@ -21,6 +21,16 @@ class ExecutionContextMixin {
     setData(data) {
         this.set("data", data);
     }
-}
 
-export default ExecutionContextMixin;
+    static getMixinRelations() {
+        return [];
+    }
+
+    static getCumulativeMixinRelations() {
+        return this.getMixinRelations();
+    }
+
+    static getSuperTypes() {
+        return [];
+    }
+}

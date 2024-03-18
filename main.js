@@ -1,4 +1,4 @@
-import GUID from './GUID.js';
+import GUID from './guid.js';
 import ScenarioDataType from './ScenarioDataType.js';
 import PlanScenario from './PlanScenario.js';
 import ScenarioPathStep from './ScenarioPathStep.js' 
@@ -73,12 +73,13 @@ var scenarioPathStep2 = new ScenarioPathStep({
     nextStep: [],
     previousStep: [], 
     inputDatasets: [periodDataset1, periodDataset2],
+    inputDatasets:[periodDataset1],
     scenarioDatasets: [periodDataset4],
     whatIfConfig: [whatIfConfig],
 });
 var scenarioPathStep3 = new ScenarioPathStep({
     phase: "Phase 3",
-    alternative: "Alternative 2",
+    alternative: "Alternative 3",
     startPeriod: 6,
     noPeriods: 3,
     nextStep: [],
@@ -106,6 +107,7 @@ var planScenario = new PlanScenario({
     scenarioPathSteps: [scenarioPathStep1],
     executionContext: executionContext,
 });
+
 
 console.log("Plan Scenario:\n", planScenario.toJSON());
 console.log("Execution Context:\n", executionContext.toJSON());

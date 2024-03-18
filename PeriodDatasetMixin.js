@@ -1,7 +1,7 @@
-class PeriodDatasetMixin {
-    constructor() {
-        this.defaults = {
-            period: 0,
+export default class PeriodDatasetMixin {
+    defaults() {
+        return {
+            period: null,
             data: null,
             type: null,
         };
@@ -46,5 +46,3 @@ class PeriodDatasetMixin {
         ];
     }
 }
-
-export default PeriodDatasetMixin;
