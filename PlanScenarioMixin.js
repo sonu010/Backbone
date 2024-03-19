@@ -31,9 +31,10 @@ export class PlanScenarioMixin {
                 key: "scenarioPathSteps",
                 relatedModel: "ScenarioPathStep",
                 reverseRelation: {
-                    key: "planScenarioScenarioPathStep",
                     type: Backbone.HasOne,
-                    includeInJSON: Backbone.Model.prototype.idAttribute
+                    key: "scenarioPathStepToPlanScenario",
+                    relatedModel:"PlanScenario",
+                    includeInJSON: "id"
                 }
             },
             {
@@ -43,7 +44,7 @@ export class PlanScenarioMixin {
                 reverseRelation: {
                     key: "planScenarioExecutionContext",
                     type: Backbone.HasOne,
-                    includeInJSON: Backbone.Model.prototype.idAttribute
+                    includeInJSON: "id"
                 }
             }
         ];

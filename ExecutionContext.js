@@ -7,6 +7,6 @@ var ExecutionContext = Backbone.RelationalModel.extend(customExtends({
     }
 }, new ExecutionContextMixin()));
 
-ExecutionContext.abstract = true;
+ExecutionContext.abstract = false;
 
 export default  ExecutionContext ;

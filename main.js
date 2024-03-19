@@ -2,14 +2,14 @@ import GUID from './guid.js';
 import ScenarioDataType from './ScenarioDataType.js';
 import PlanScenario from './PlanScenario.js';
 import ScenarioPathStep from './ScenarioPathStep.js' 
-import PeriodDataset from './PeriodDataset.js'
+import {PeriodDataset} from './PeriodDataset.js'
 import ExecutionContext from './ExecutionContext.js'
 import WhatIfConfig from './WhatIfConfig.js';
 const planScenarioId = GUID();
 
 // Create ExecutionContext
 var executionContext = new ExecutionContext({
-    planId: planScenarioId,
+    // planId: planScenarioId,
     data: {
         context1: "executionContextData1",
         context2: "executionContextData2",
@@ -73,7 +73,6 @@ var scenarioPathStep2 = new ScenarioPathStep({
     nextStep: [],
     previousStep: [], 
     inputDatasets: [periodDataset1, periodDataset2],
-    inputDatasets:[periodDataset1],
     scenarioDatasets: [periodDataset4],
     whatIfConfig: [whatIfConfig],
 });
@@ -98,7 +97,7 @@ var periodDataset4 = new PeriodDataset({
 });
 
 scenarioPathStep1.set('nextStep', scenarioPathStep2);
-scenarioPathStep2.set('previousStep',scenarioPathStep3)
+// scenarioPathStep2.set('previousStep',scenarioPathStep3)
 // Create PlanScenario
 var planScenario = new PlanScenario({
     id: planScenarioId,

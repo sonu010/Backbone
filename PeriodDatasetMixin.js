@@ -6,7 +6,7 @@ export default class PeriodDatasetMixin {
             type: null,
         };
     }
-
+    initialize(){}
     getPeriod() {
         return this.get("period");
     }
@@ -31,18 +31,25 @@ export default class PeriodDatasetMixin {
         this.set("type", type);
     }
 
-    relations() {
+    static getMixinRelations() {
         return [
             {
                 type: Backbone.HasMany,
                 key: "nextDataset",
                 relatedModel: "PeriodDataset",
                 reverseRelation: {
+                    type: Backbone.HasOne,
                     key: "previousDataset",
                     includeInJSON: "id",
-                    type: Backbone.HasOne,
                 },
             },
         ];
+    }
+    static getCumulativeMixinRelations() {
+        return this.getMixinRelations();
+    }
+
+    static getSuperTypes() {
+        return [];
     }
 }

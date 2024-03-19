@@ -2,7 +2,7 @@ export class ScenarioPathStepMixin {
     defaults() {
         return {
             phase: null,
-            alternative: null,
+            alternative: "Base Alternative",
             startPeriod: null,
             noPeriods: null,
         };

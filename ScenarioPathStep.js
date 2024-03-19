@@ -6,5 +6,5 @@ var ScenarioPathStep = Backbone.RelationalModel.extend(customExtends({
         Backbone.Model.prototype.initialize.apply(this, arguments);
     }
 }, new ScenarioPathStepMixin()));
-ScenarioPathStep.abstract = true;
+ScenarioPathStep.abstract = false;
 export default ScenarioPathStep ;

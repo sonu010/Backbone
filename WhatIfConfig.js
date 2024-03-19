@@ -7,5 +7,5 @@ export const WhatIfConfig = Backbone.RelationalModel.extend(customExtends({
     }
 }));
 
-WhatIfConfig.abstract = true;
+WhatIfConfig.abstract = false;
 export default WhatIfConfig;

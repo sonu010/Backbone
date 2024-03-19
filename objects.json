@@ -1,0 +1,101 @@
+{
+    "id": 2831,
+    "plan": "Plan 1",
+    "startTime": "2024-03-19T06:31:08.556Z",
+    "scenarioPathSteps": [
+        {
+            "phase": "Phase 1",
+            "alternative": "Alternative 1",
+            "startPeriod": 0,
+            "noPeriods": 5,
+            "nextStep": {
+                "phase": "Phase 2",
+                "alternative": "Alternative 2",
+                "startPeriod": 6,
+                "noPeriods": 3,
+                "nextStep": [],
+                "previousStep": [],
+                "inputDatasets": [
+                    {
+                        "period": 1,
+                        "data": {
+                            "value1": 100,
+                            "value2": 200
+                        },
+                        "type": "plan",
+                        "nextDataset": {
+                            "period": 2,
+                            "data": {
+                                "value1": 150,
+                                "value2": 250
+                            },
+                            "type": "actual"
+                        }
+                    },
+                    {
+                        "period": 2,
+                        "data": {
+                            "value1": 150,
+                            "value2": 250
+                        },
+                        "type": "actual"
+                    }
+                ],
+                "scenarioDatasets": [
+                    null
+                ],
+                "whatIfConfig": [
+                    {
+                        "valueId": 7670,
+                        "valueInstanceId": 2625
+                    }
+                ]
+            },
+            "previousStep": [],
+            "inputDatasets": [
+                {
+                    "period": 1,
+                    "data": {
+                        "value1": 100,
+                        "value2": 200
+                    },
+                    "type": "plan",
+                    "nextDataset": {
+                        "period": 2,
+                        "data": {
+                            "value1": 150,
+                            "value2": 250
+                        },
+                        "type": "actual"
+                    }
+                },
+                {
+                    "period": 2,
+                    "data": {
+                        "value1": 150,
+                        "value2": 250
+                    },
+                    "type": "actual"
+                }
+            ],
+            "scenarioDatasets": [],
+            "whatIfConfig": [
+                {
+                    "valueId": 7670,
+                    "valueInstanceId": 2625
+                },
+                {
+                    "valueId": 8270,
+                    "valueInstanceId": 5048
+                }
+            ]
+        }
+    ],
+    "executionContext": {
+        "planId": 2831,
+        "data": {
+            "context1": "executionContextData1",
+            "context2": "executionContextData2"
+        }
+    }
+}
