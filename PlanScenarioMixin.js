@@ -34,20 +34,20 @@ export class PlanScenarioMixin {
                 key: 'scenarioPathSteps',
                 relatedModel: "ScenarioPathStep",
                 reverseRelation: {
-                    type: Backbone.HasOne,
+                    // type: Backbone.HasOne,
                     key: 'scenarioPathStepToPlanScenario',
-                    includeInJSON: 'id'
+                    includeInJSON: Backbone.Model.prototype.idAttribute
                 }
             },
             {
                 type: Backbone.HasOne,
                 key: 'executionContext',
                 relatedModel: 'ExecutionContext',
-                addModelScope:true,
+                // addModelScope:true,
                 reverseRelation: {
                     key: 'planScenarioExecutionContext',
                     type: Backbone.HasOne,
-                    includeInJSON: 'id'
+                    includeInJSON: Backbone.Model.prototype.idAttribute,
                 }
             }
         ]);

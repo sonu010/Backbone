@@ -45,11 +45,11 @@ export class ScenarioPathStepMixin {
             {
                 type: Backbone.HasMany,
                 key: "nextStep",
-                relatedModel: "ScenarioPathStep",
+                // relatedModel: "ScenarioPathStep",
                 reverseRelation: {
                     key: "previousStep",
-                    type: Backbone.HasOne,
-                    includeInJSON: "id",
+                    // type: Backbone.HasOne,
+                    includeInJSON: Backbone.Model.prototype.idAttribute,
                 },
             },
             {
@@ -58,8 +58,8 @@ export class ScenarioPathStepMixin {
                 relatedModel: "PeriodDataset",
                 reverseRelation: {
                     key: "inputPD",
-                    type: Backbone.HasOne,
-                    includeInJSON: "id",
+                    // type: Backbone.HasOne,
+                    includeInJSON: Backbone.Model.prototype.idAttribute,
                 },
             },
             {
@@ -68,8 +68,8 @@ export class ScenarioPathStepMixin {
                 relatedModel: "PeriodDataset",
                 reverseRelation: {
                     key: "scenarioPD",
-                    type: Backbone.HasOne,
-                    includeInJSON: "id",
+                    // type: Backbone.HasOne,
+                    includeInJSON: Backbone.Model.prototype.idAttribute,
                 },
             },
             {
@@ -78,10 +78,16 @@ export class ScenarioPathStepMixin {
                 relatedModel: "WhatIfConfig",
                 reverseRelation: {
                     key: "ScenarioPathstepWIC",
-                    type: Backbone.HasOne,
-                    includeInJSON: "id",
+                    // type: Backbone.HasOne,
+                    includeInJSON: Backbone.Model.prototype.idAttribute,
                 },
             },
         ];
+    }
+    static getCumulativeMixinRelations(){
+        return this.getMixinRelations();
+    }
+    static getSuperTypes() {
+        return [];
     }
 }

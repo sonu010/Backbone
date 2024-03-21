@@ -1,6 +1,6 @@
 import { ExecutionContextMixin } from './ExecutionContextMixin.js';
 import { customExtends } from './utils.js';
-var ExecutionContext = Backbone.RelationalModel.extend(customExtends({
+let ExecutionContext = Backbone.RelationalModel.extend(customExtends({
     relations: ExecutionContextMixin.getMixinRelations(),
     initialize: function(attributes, options) {
         Backbone.Model.prototype.initialize.apply(this, arguments);
@@ -8,5 +8,5 @@ var ExecutionContext = Backbone.RelationalModel.extend(customExtends({
 }, new ExecutionContextMixin()));
 
 ExecutionContext.abstract = false;
-
+Backbone.Relational.store.addModelScope("ExecutionContext")
 export default  ExecutionContext ;

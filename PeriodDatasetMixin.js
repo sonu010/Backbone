@@ -1,4 +1,4 @@
-export default class PeriodDatasetMixin {
+export class PeriodDatasetMixin {
     defaults() {
         return {
             period: null,
@@ -36,11 +36,11 @@ export default class PeriodDatasetMixin {
             {
                 type: Backbone.HasMany,
                 key: "nextDataset",
-                relatedModel: "PeriodDataset",
+                // relatedModel: "PeriodDataset",
                 reverseRelation: {
-                    type: Backbone.HasOne,
+                    // type: Backbone.HasOne,
                     key: "previousDataset",
-                    includeInJSON: "id",
+                    includeInJSON: Backbone.Model.prototype.idAttribute,
                 },
             },
         ];

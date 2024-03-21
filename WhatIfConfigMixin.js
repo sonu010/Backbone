@@ -1,4 +1,4 @@
-export default class WhatIfConfigMixin {
+export class WhatIfConfigMixin {
     defaults() {
         return {
             valueId: null,
@@ -21,7 +21,13 @@ export default class WhatIfConfigMixin {
     setValueInstanceId(valueInstanceId) {
         return this.set("valueInstanceId", valueInstanceId);
     }
-    relations(){
-        
+    static getMixinRelations(){
+        return[]
+    }
+    static getCumulativeMixinRelations(){
+        return this.getMixinRelations();
+    }
+    static getSuperTypes(){
+        return []
     }
 }

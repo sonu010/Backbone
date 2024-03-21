@@ -1,56 +1,15 @@
-{
-    "id": 2831,
+[
+    {
+    "id": 1106,
     "plan": "Plan 1",
-    "startTime": "2024-03-19T06:31:08.556Z",
+    "startTime": "2024-03-21T05:39:37.136Z",
     "scenarioPathSteps": [
         {
             "phase": "Phase 1",
             "alternative": "Alternative 1",
             "startPeriod": 0,
             "noPeriods": 5,
-            "nextStep": {
-                "phase": "Phase 2",
-                "alternative": "Alternative 2",
-                "startPeriod": 6,
-                "noPeriods": 3,
-                "nextStep": [],
-                "previousStep": [],
-                "inputDatasets": [
-                    {
-                        "period": 1,
-                        "data": {
-                            "value1": 100,
-                            "value2": 200
-                        },
-                        "type": "plan",
-                        "nextDataset": {
-                            "period": 2,
-                            "data": {
-                                "value1": 150,
-                                "value2": 250
-                            },
-                            "type": "actual"
-                        }
-                    },
-                    {
-                        "period": 2,
-                        "data": {
-                            "value1": 150,
-                            "value2": 250
-                        },
-                        "type": "actual"
-                    }
-                ],
-                "scenarioDatasets": [
-                    null
-                ],
-                "whatIfConfig": [
-                    {
-                        "valueId": 7670,
-                        "valueInstanceId": 2625
-                    }
-                ]
-            },
+            "nextStep": [],
             "previousStep": [],
             "inputDatasets": [
                 {
@@ -81,21 +40,80 @@
             "scenarioDatasets": [],
             "whatIfConfig": [
                 {
-                    "valueId": 7670,
-                    "valueInstanceId": 2625
+                    "valueId": 1044,
+                    "valueInstanceId": 1761
                 },
                 {
-                    "valueId": 8270,
-                    "valueInstanceId": 5048
+                    "valueId": 8620,
+                    "valueInstanceId": 8384
                 }
             ]
         }
     ],
     "executionContext": {
-        "planId": 2831,
+        "planId": 1106,
         "data": {
             "context1": "executionContextData1",
             "context2": "executionContextData2"
         }
     }
-}
+},
+
+
+
+
+{
+    "id": 5437,
+    "plan": "Plan 1",
+    "startTime": "2024-03-21T11:38:01.329Z",
+    "scenarioPathSteps": [
+        {
+            "phase": "Phase 1",
+            "alternative": "Alternative 1",
+            "startPeriod": 0,
+            "noPeriods": 5,
+            "inputDatasets": [
+                {
+                    "period": 1,
+                    "data": {
+                        "value1": 100,
+                        "value2": 200
+                    },
+                    "type": "plan",
+                    "nextDataset": [
+                        {
+                            "period": 2,
+                            "data": {
+                                "value1": 150,
+                                "value2": 250
+                            },
+                            "type": "actual",
+                            "nextDataset": [],
+                            "previousDataset": null
+                        }
+                    ],
+                    "previousDataset": null
+                }
+            ],
+            "whatIfConfig": [
+                {
+                    "valueId": 3503,
+                    "valueInstanceId": 4160
+                },
+                {
+                    "valueId": 3036,
+                    "valueInstanceId": 6620
+                }
+            ],
+            "nextStep": [],
+            "previousStep": null
+        }
+    ],
+    "executionContext": {
+        "planId": 5437,
+        "data": {
+            "context1": "executionContextData1",
+            "context2": "executionContextData2"
+        }
+    }
+}]
